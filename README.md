@@ -5,6 +5,8 @@
 - [Кодирование категориальных данных](#header3)
 - [Масштабирование данных](#header4)
 - [Разбиение данных](#header5)
+- [Понижение размерности](#header6)
+- [Обработка текстовых данных](#header7)
 
 <a id="header1"></a>
 # Изучение данных 
@@ -160,3 +162,82 @@ X_scaled = scaler.fit_transform(X)
     scores = cross_val_score(model, X, y, cv=5)
     ```
     Модель обучается на одном фолде и тестируется на остальных, что позволяет точно оценить производительность модели
+    
+<a id="header6"></a>
+# Понижение размерности данных
+1. PCA
+    ```python
+    from sklearn.decomposition import PCA
+    pca = PCA(n_components=2)# Будущая размерность
+    X_pca = pca.fit_transform(X)
+    ```
+    Преобразует признаки в ортогональные переменные, которые упорядочены по обьясненной ими дисперсии.
+    
+2. t-SNE
+    ```python
+    from sklearn.manifold import TSNE
+    tsne = TSNE(n_components=2, random_state=777)# Будущая размерность
+    X_tsne = tsne.fit_transform(X)
+    ```
+    Сохраняет локальные связи между данными. Подходит для визуализации кластеров
+    
+3. LDA
+    ```python
+    from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+    lda = LinearDiscriminantAnalysis(n_components=2)# Будущая размерность
+    X_lda = lda.fit_transform(X)
+    ```
+    Ищет новые оси признаков
+
+<a id="header7"></a>
+# Обработка текстовых данных
+Если задача будет связана с текстовыми данными(что на вряд-ли). Если меч пригодится один раз в жизни, носить его нужно всегда. Вот и мы будем носить эту инфу.
+1. Токенизация
+    ```python
+    from nltk.tokenize import word_tokenize
+    tokens = word_tokenize(text)
+    ```
+    Делит текст на токены, которые используются обработчиками и моделями
+
+2. Удаление стоп-слов
+    ```python
+    from nltk.corpus import stopwords
+    stop_words = set(stopwords.words('russian'))
+    filtered = [word for word in tokens if word.lower() not in stop_words]
+    ```
+    Убирает, слова не влияющие на смысл документа
+    
+3. Приведение к нижнему регистру
+    ```python
+    ltext = text.lower()
+    ```
+    Приводит все слова к нижнему регистру
+    
+4. Лемматизация
+    ```python
+    from nltk.stem import WordNetLemmatizer
+    lemmatizer = WordNetLemmatizer()
+    lemmatized_tokens = [lemmatizer.lemmatize(token) for token in tokens]
+    ```
+    Приводит слова к базовой форме
+    
+5. Векторизация
+    1. Bag-of-Words
+        ```python
+        from sklearn.feature_extraction.text import CountVectorizer
+        vectorizer = CountVectorizer()
+        X = vectorizer.fit_transform(corpus)
+        # Матрица счетчиков и список слов
+        X.toarray()
+        vectorizer.get_feature_names()
+        ```
+        
+    2. TF-IDF
+        ```python
+        from sklearn.feature_extraction.text import TfidfVectorizer
+        vectorizer = TfidfVectorizer()
+        X = vectorizer.fit_transform(corpus)
+        # Матрица счетчиков и список слов
+        X.toarray()
+        vectorizer.get_feature_names()
+        
