@@ -16,7 +16,8 @@ accuracy_score(y_test, y_bin_knn_pred)
 from sklearn.metrics import confusion_matrix
 confusion_matrix(y_test, y_bin_knn_pred)
 ```
-- Precision, Recall, F-мера
+- Precision, Recall, F-мера  
+
 P  – число истинных результатов, P=TP+FN
 N – число ложных результатов, N=TN+FP.
 
