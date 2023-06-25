@@ -3,6 +3,8 @@
 - [Изучение данных](#header1)
 - [Очистка данных](#header2)
 - [Кодирование категориальных данных](#header3)
+- [Масштабирование данных](#header4)
+- [Разбиение данных](#header5)
 
 <a id="header1"></a>
 # Изучение данных 
@@ -136,3 +138,25 @@ X_scaled = scaler.fit_transform(X)
 5. Robust Scaling
     Устойчиво к выбросам, поэтому используется с моделями, которые чувствительны к ним
 
+<a id="header5"></a>
+# Разбиение данных
+1. Simple Random Split
+    ```python
+    from sklearn.model_selection import train_test_split
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=777) # Чаще всего используют разбиение 80/20 или 70/30. В связи с этим меняется test_size
+    ```
+    Разбивает выборку в нужном соотношении. Самый простой вариант
+
+2. Stratified split
+    ```python
+    from sklearn.model_selection import train_test_split
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=df[classes] random_state=777)
+    ```
+    Разбивает выборку, сохраняя пропорции несбалансированных классов в обучающей и тестовой выборках
+    
+3. Cross-Validation
+    ```python
+    from sklearn.model_selection import cross_val_score
+    scores = cross_val_score(model, X, y, cv=5)
+    ```
+    Модель обучается на одном фолде и тестируется на остальных, что позволяет точно оценить производительность модели
