@@ -19,7 +19,7 @@ silhouette_score(X, labels_pred)
 kmeans.inertia_
 ```  
 Внешние:
-- rand score
+- rand score  
 Вычисляет меру подобия между двумя кластеризациями, рассматривая все пары выборок и подсчитывая пары, которые назначены в одном и том же или разных кластерах в предсказанных и истинных кластеризациях
 ```python
 from sklearn.metrics.cluster import rand_score
