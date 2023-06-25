@@ -38,4 +38,4 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import plot_roc_curve
 plot_roc_curve(knn, X_test, y_test)
 ```
-![Текст с описанием картинки](https://drive.google.com/file/d/13ppWmHhzhuCYNgnL3bBwz7CMxjGgk0qj/view?usp=sharing)
+![Текст с описанием картинки](download.png)
